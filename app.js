@@ -95,7 +95,7 @@ app.use(require('less-middleware')({
     src: path.join(__dirname, 'public')
 }));
 //app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'node_modules')));
+//app.use(express.static(path.join(__dirname, 'js')));
 app.use(express.static(path.join(__dirname, 'gugu-manager')));
 
 app.use('/login', login);
