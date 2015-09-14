@@ -4,7 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-   
+
 var login = require('./routes/login');
 
 
@@ -15,14 +15,74 @@ var app = express();
 // app.set('view engine', 'jade');
 
 //handlerbars view
-app.set('views', path.join(__dirname, 'views')); 
-var exphbs  = require('express-handlebars');
-app.engine('tpl', exphbs({
-  layoutsDir: 'views',
-  defaultLayout: 'layout',
-  extname: '.tpl'
-}));
+app.set('views', path.join(__dirname, 'views'));
+var exphbs = require('express-handlebars');
+
+var hbs = exphbs.create({
+    layoutsDir: 'views',
+    defaultLayout: 'layout',
+    extname: '.tpl',
+    // Specify helpers which are only registered on this instance. 
+    helpers: {
+        compare: function(left, operator, right, options) {
+
+            if (arguments.length < 3) {
+                throw new Error('Handlerbars Helper "compare" needs 2 parameters');
+            }
+            var operators = {
+                '==': function(l, r) {
+                    return l == r;
+                },
+                '===': function(l, r) {
+                    return l === r;
+                },
+                '!=': function(l, r) {
+                    return l != r;
+                },
+                '!==': function(l, r) {
+                    return l !== r;
+                },
+                '<': function(l, r) {
+                    return l < r;
+                },
+                '>': function(l, r) {
+                    return l > r;
+                },
+                '<=': function(l, r) {
+                    return l <= r;
+                },
+                '>=': function(l, r) {
+                    return l >= r;
+                },
+                'typeof': function(l, r) {
+                    return typeof l == r;
+                }
+            };
+
+            if (!operators[operator]) {
+                throw new Error('Handlerbars Helper "compare" doesn\'t know the operator ' + operator);
+            }
+
+            var result = operators[operator](left, right);
+
+            if (result) {
+                return options.fn(this);
+            } else {
+                return options.inverse(this);
+            }
+        },
+        bar: function() {
+            return 'BAR!';
+        }
+    }
+});
+
+app.engine('tpl', hbs.engine);
+
+
+
 app.set('view engine', 'tpl');
+ 
 
 
 app.use(favicon());
@@ -31,11 +91,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
-app.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
+app.use(require('less-middleware')({
+    src: path.join(__dirname, 'public')
+}));
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use(express.static(path.join(__dirname, 'gugu-manager')));
- 
+
 app.use('/login', login);
 app.use('/testerror', require('./routes/testerror'));
 
