@@ -4,9 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-  
-var routes = require('./routes/index');
-var users = require('./routes/users');
+   
 var login = require('./routes/login');
 
 var app = express();
@@ -25,9 +23,7 @@ app.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use(express.static(path.join(__dirname, 'gugu-manager')));
-
-app.use('/', routes);
-app.use('/users', users);
+ 
 app.use('/login', login);
 
 /// catch 404 and forwarding to error handler

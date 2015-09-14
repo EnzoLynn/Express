@@ -6,13 +6,14 @@ var router = express.Router();
 /* GET users listing. */
 router.post('/', function(req, res) {
 
-
+	var global = require('global.js');
+	 
     // res.status(500).send({ error: 'something blew up' }); 
     var restApi = require('restApi.js'); 
     restApi.ajax(res, {
-        host: '127.0.0.1',
-        port: 818,
-        path: '/login/ajaxLogin'
+        host: global.host,
+        port: global.port,
+        path: global.apiControllers.login
     }, req.body);
 });
 
