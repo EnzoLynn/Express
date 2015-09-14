@@ -7,11 +7,23 @@ var bodyParser = require('body-parser');
    
 var login = require('./routes/login');
 
+
 var app = express();
 
 // view engine setup
+// app.set('views', path.join(__dirname, 'views')); 
+// app.set('view engine', 'jade');
+
+//handlerbars view
 app.set('views', path.join(__dirname, 'views')); 
-app.set('view engine', 'jade');
+var exphbs  = require('express-handlebars');
+app.engine('tpl', exphbs({
+  layoutsDir: 'views',
+  defaultLayout: 'layout',
+  extname: '.tpl'
+}));
+app.set('view engine', 'tpl');
+
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -25,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use(express.static(path.join(__dirname, 'gugu-manager')));
  
 app.use('/login', login);
+app.use('/testerror', require('./routes/testerror'));
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -33,8 +46,7 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-/// error handlers
-
+/// error handlers 
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
