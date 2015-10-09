@@ -4,8 +4,7 @@ var router = express.Router();
 //var app = express();
 //app.use(express.static(path.join(__dirname, 'node_modules')));
 /* GET users listing. */
-var uri = "mongodb://localhost:27017/test";
-var db = require('mongoskin').db(uri);
+var db = require('../js/dbHelper.js');
 
 router.get('/', function(req, res) {
 	 
@@ -19,6 +18,13 @@ router.get('/', function(req, res) {
 	    });
     });
     console.log(123);
+    
+});
+
+router.get('/1', function(req, res) {
+	 
+    
+    console.log(444);
     
 });
 
