@@ -7,11 +7,19 @@ var router = express.Router();
 var db = require('../js/dbHelper.js');
 
 router.get('/', function(req, res) {
-    db.getList('storeCollection', function(result) {
+    db.getList('storeCollection', function(err, result) {
+        if (err) {
+            res.render('error', {
+                message: err,
+                error: {
+                    status: 200
+                }
+            });
+        };
         res.render('error', {
             message: result[0].segment,
             error: {
-                status: 200 
+                status: 200
             }
         });
     })
