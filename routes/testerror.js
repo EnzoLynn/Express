@@ -7,25 +7,33 @@ var router = express.Router();
 var db = require('../js/dbHelper.js');
 
 router.get('/', function(req, res) {
-	 
-    db.collection('storeCollection').find().toArray(function(err, result) {
-        if (err) throw err;
+    db.getList('storeCollection', function(result) {
         res.render('error', {
-	        message:result[0].segment,
-	        error: {
-	            status: 200
-	        }
-	    });
-    });
+            message: result[0].segment,
+            error: {
+                status: 200
+            }
+        });
+    })
+
+    // db.collection('storeCollection').find().toArray(function(err, result) {
+    //     if (err) throw err;
+    //     res.render('error', {
+    //      message:result[0].segment,
+    //      error: {
+    //          status: 200
+    //      }
+    //  });
+    // });
     console.log(123);
-    
+
 });
 
 router.get('/1', function(req, res) {
-	 
-    
+
+
     console.log(444);
-    
+
 });
 
 module.exports = router;
