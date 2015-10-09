@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
         res.render('error', {
             message: result[0].segment,
             error: {
-                status: 200
+                status: 200 
             }
         });
     })
