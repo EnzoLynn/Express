@@ -7,7 +7,7 @@ var router = express.Router();
 var db = require('../js/dbHelper.js');
 
 router.get('/', function(req, res) {
-	//segment:{$regex:/enzol/i}
+	//segment:/enzol/i
     db.getList('storeCollection',{}, function(err, result) {
         if (err) {
             res.render('error', {
