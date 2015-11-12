@@ -17,4 +17,14 @@ router.post('/', function(req, res) {
     }, req.body);
 });
 
+router.get('/', function(req, res) {
+
+ console.log(555);
+    res.end(JSON.stringify({
+        msg: "O11K",
+        msg1:'000kk'
+    }));
+
+});
+
 module.exports = router;
