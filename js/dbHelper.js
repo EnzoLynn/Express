@@ -1,12 +1,17 @@
-var uri = "mongodb://localhost:27017/test";
-var db = require('mongoskin').db(uri);
+var uri = "mongodb://192.168.91.101:27017/test";
+var guid = require('../js/guid.js');
+var dbControl = {
+	dbPools:{}
+};
 
-db.getList = function(collectionName,fillter,callback){
-	
+dbControl.getList = function(collectionName,fillter,callback){
+	 var db = require('mongoskin').db(uri);
+	 var sign = guid.raw(); 
+	 dbControl.dbPools[sign] = db; 
 	 db.collection(collectionName).find(fillter).toArray(function(err, result) {
 	 	db.close();
-        if (err) throw err;
-
+	 	delete dbControl.dbPools[sign]; 
+        if (err) throw err; 
         if (callback) {callback(err,result)};
         return result;
       
@@ -17,4 +22,4 @@ db.getList = function(collectionName,fillter,callback){
  
 
 
-module.exports = db;
+module.exports = dbControl;
