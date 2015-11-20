@@ -8,7 +8,7 @@ var db = require('../js/dbHelper.js');
 
 router.get('/', function(req, res) {
 	//segment:/enzol/i
-    db.getList('storeCollection',{}, function(err, result) {
+    db.select('storeCollection',{}, function(err, result) {
     	
         if (err) {
             res.render('error', {
