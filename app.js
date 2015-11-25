@@ -100,6 +100,7 @@ app.use(express.static(path.join(__dirname, 'gugu-manager')));
 
 app.use('/login', login);
 app.use('/testerror', require('./routes/testerror'));
+app.use('/noteapp', require('./routes/noteapp'));
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

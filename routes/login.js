@@ -3,7 +3,7 @@ var router = express.Router();
 
 //var db = require('../js/dbHelper.js');
 
-var db = require('../js/mongoHelper.js');
+var db = require('../js/mongoHelper.js'); 
 //var path = require('path');
 //var app = express();
 //app.use(express.static(path.join(__dirname, 'node_modules')));
@@ -24,7 +24,7 @@ router.post('/', function(req, res) {
 router.get('/', function(req, res) {
 
     console.log(666);
-    // db.insert('storeCollection', [{
+    // db.insert('storeCollection1', [{
     //     version: '44',
     //     segment: 'myname'
     // }], function(result) {
@@ -39,12 +39,9 @@ router.get('/', function(req, res) {
     //         // result.data.ops  插入的数据 [{},{}]
     //         // result.data.insertedCount    插入数量
     //         // result.data.insertedIds 插入的Id ["",""]
-            
+
     //         console.log("insert====" + JSON.stringify(result));
-    //     };
-
-
-
+    //     }; 
     // });
     // db.update('storeCollection', {
     //     version: '44+' 
@@ -63,7 +60,7 @@ router.get('/', function(req, res) {
     //         //result.data.result.ok   成功1 bool
     //         // result.data.n  受影响行数 
     //         // result.data.nModified   被修改数量
-           
+
     //         console.log("update====" + result);
 
     //     };
@@ -87,9 +84,17 @@ router.get('/', function(req, res) {
 
 
     // });
-    
+    // db.removeCollection('storeCollection', function(result) {
+    //     if (!result.success) {
+    //         console.log(result.msg);
+    //     };
+    //     if (result.success) {
 
-    db.select('storeCollection', {}, function(result) { 
+         
+    //     }
+    // });
+db.uri = "mongodb://192.168.91.101:27017/test";
+    db.select('storeCollection', {}, function(result) {
         if (!result.success) {
             res.end(JSON.stringify({
                 msg: result.msg,
@@ -103,6 +108,7 @@ router.get('/', function(req, res) {
             result.data.forEach(function(item) {
                 console.log("foreach====" + item);
             });
+             console.log(result.data);
             res.end(JSON.stringify({
                 msg: result.data,
                 msg1: result.data[0].segment
